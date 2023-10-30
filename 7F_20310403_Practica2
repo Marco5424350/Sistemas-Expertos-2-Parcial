@@ -1,0 +1,26 @@
+import akinator  # Importa la librería Akinator
+
+aki = akinator.Akinator()  # Crea una instancia del juego Akinator
+q = aki.start_game()  # Inicia una nueva partida y obtiene la primera pregunta del juego
+
+# Bucle principal: se ejecuta mientras la progresión del juego sea menor o igual al 80%
+while aki.progression <= 80:
+    a = input(q +"\n\t")  # Muestra la pregunta actual y espera la respuesta del usuario
+    if a == 'b':  # Si el usuario ingresa 'b' para retroceder
+        try:
+            q = aki.back()  # Intenta retroceder en el juego
+        except akinator.CantGoBackAnyFurhter:
+            pass  # Captura una excepción si no se puede retroceder más
+    else:
+        q = aki.answer(a)  # El usuario responde la pregunta y avanza en el juego
+
+aki.win()  # El juego hace una suposición final sobre el personaje
+
+# Pregunta al usuario si la suposición del juego es correcta
+correct = input(f"Es: {aki.first_guess['name']} ({aki.first_guess['description']})! Adivine?\n{aki.first_guess['absolute_picture_path']}\n\t")
+
+# Comprueba si el usuario confirma que la suposición es correcta
+if correct.lower() == 'SI' or correct.lower() == 'y':
+    print("Si lo tengo\n")  # Muestra un mensaje de éxito
+else:
+    print("ohh fallaste \n")  # Muestra un mensaje de error
